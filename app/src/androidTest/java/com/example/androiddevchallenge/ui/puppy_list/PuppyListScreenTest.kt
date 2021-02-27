@@ -5,9 +5,9 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.printToLog
-import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.androiddevchallenge.MainActivity
+import com.example.androiddevchallenge.data.puppies
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import org.junit.Before
 import org.junit.Rule
@@ -22,9 +22,8 @@ class PuppyListScreenTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            val navController = rememberNavController()
             MyTheme {
-                PuppyListScreen(navController)
+                PuppyListScreen(navigateDetail = {})
             }
         }
 
@@ -34,8 +33,9 @@ class PuppyListScreenTest {
 
     @Test
     fun showPuppyListScreen() {
+        val puppy = puppies.first()
         composeTestRule.onNodeWithText("Compose Puppies").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Lucy", substring = true).assertIsDisplayed()
+        composeTestRule.onNodeWithText(puppy.name, substring = true).assertIsDisplayed()
     }
 
     companion object {

@@ -40,19 +40,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.example.androiddevchallenge.data.model.Puppy
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
 @Composable
-fun PuppyDetailScreen(id: Int, navController: NavController) {
+fun PuppyDetailScreen(id: Int, navigateBack: () -> Unit) {
     val viewModelFactory = PuppyDetailViewModel.Factory(id)
     val viewModel = viewModel(PuppyDetailViewModel::class.java, factory = viewModelFactory)
 
     val puppy by viewModel.puppy.collectAsState()
 
     Scaffold(
-        topBar = { PuppyDetailTopBar(onClickBack = { navController.popBackStack() }) }
+        topBar = { PuppyDetailTopBar(onClickBack = navigateBack) }
     ) {
         PuppyDetailContent(puppy)
     }

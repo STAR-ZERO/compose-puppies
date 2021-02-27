@@ -5,9 +5,9 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.printToLog
-import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.androiddevchallenge.MainActivity
+import com.example.androiddevchallenge.data.puppies
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import org.junit.Before
 import org.junit.Rule
@@ -20,12 +20,13 @@ class PuppyDetailScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
+    private val puppy = puppies.first()
+
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            val navController = rememberNavController()
             MyTheme {
-                PuppyDetailScreen(id = 1, navController = navController)
+                PuppyDetailScreen(id = puppy.id, navigateBack = {})
             }
         }
 
@@ -35,9 +36,13 @@ class PuppyDetailScreenTest {
 
     @Test
     fun showPuppyDetailScreen() {
-        composeTestRule.onNodeWithText("Lucy", substring = true).assertIsDisplayed()
-        composeTestRule.onNodeWithText("7 Years 3 month", substring = true).assertIsDisplayed()
-        composeTestRule.onNodeWithText("Female", substring = true).assertIsDisplayed()
+        composeTestRule.onNodeWithText("Compose Puppies").assertIsDisplayed()
+
+        composeTestRule.onNodeWithText(puppy.name, substring = true).assertIsDisplayed()
+        composeTestRule.onNodeWithText(puppy.age, substring = true).assertIsDisplayed()
+        composeTestRule.onNodeWithText(puppy.gender, substring = true).assertIsDisplayed()
+
+        // button
         composeTestRule.onNodeWithText("Adopt", substring = true).assertIsDisplayed()
     }
 
