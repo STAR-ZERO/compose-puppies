@@ -48,7 +48,7 @@ fun ComposePuppies() {
         val navController = rememberNavController()
         NavHost(navController, startDestination = "list") {
             composable("list") {
-                PuppyListScreen(navigateDetail = { navController.navigate("detail/${it}") })
+                PuppyListScreen(navigateDetail = { navController.navigate("detail/$it") })
             }
             composable(
                 "detail/{id}",
