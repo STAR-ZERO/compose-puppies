@@ -39,11 +39,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androiddevchallenge.data.model.Puppy
 import com.example.androiddevchallenge.ui.theme.MyTheme
+import com.example.androiddevchallenge.ui.util.LocalNavigator
 
 @Composable
-fun PuppyListScreen(navigateDetail: (id: Int) -> Unit) {
+fun PuppyListScreen() {
     val viewModel = viewModel<PuppyListViewModel>()
     val puppies by viewModel.puppies.collectAsState()
+    val navigator = LocalNavigator.current
 
     Scaffold(
         topBar = { PuppyListTopBar() }
@@ -52,7 +54,7 @@ fun PuppyListScreen(navigateDetail: (id: Int) -> Unit) {
             items(puppies) { puppy ->
                 PuppyRow(
                     puppy = puppy,
-                    onClickPuppy = { navigateDetail(it.id) }
+                    onClickPuppy = { navigator.navigateDetail(it.id) }
                 )
                 Divider(modifier = Modifier.height(1.dp))
             }

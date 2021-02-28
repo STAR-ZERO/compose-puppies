@@ -15,6 +15,7 @@
  */
 package com.example.androiddevchallenge.ui.puppy_detail
 
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -24,6 +25,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.androiddevchallenge.MainActivity
 import com.example.androiddevchallenge.data.puppies
 import com.example.androiddevchallenge.ui.theme.MyTheme
+import com.example.androiddevchallenge.ui.util.FakeNavigator
+import com.example.androiddevchallenge.ui.util.LocalNavigator
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -41,7 +44,9 @@ class PuppyDetailScreenTest {
     fun setUp() {
         composeTestRule.setContent {
             MyTheme {
-                PuppyDetailScreen(id = puppy.id, navigateBack = {})
+                CompositionLocalProvider(LocalNavigator provides FakeNavigator()) {
+                    PuppyDetailScreen(id = puppy.id)
+                }
             }
         }
 
